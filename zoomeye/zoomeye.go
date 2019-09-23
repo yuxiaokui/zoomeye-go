@@ -42,7 +42,7 @@ type Matches struct {
 
 
 
-func get(urlStr string) []byte {
+func Get(urlStr string) []byte {
   request, err := http.NewRequest("GET", urlStr, nil)
   request.Header.Set("Authorization", "JWT " + AccessToken)
   client := http.Client{}
@@ -57,7 +57,7 @@ func get(urlStr string) []byte {
   return respBytes
 }
 
-func post(urlStr string, data interface{}) []byte {
+func Post(urlStr string, data interface{}) []byte {
   bytesData, err := json.Marshal(data)
   body := bytes.NewReader(bytesData)
   request, err := http.NewRequest("POST", urlStr, body)
@@ -74,7 +74,7 @@ func post(urlStr string, data interface{}) []byte {
   return respBytes
 }
 
-func getAccessToken() string{
+func GetAccessToken() string{
   data := make(map[string]interface{})
   data["username"] = userName
   data["password"] = passWord
@@ -89,10 +89,10 @@ func getAccessToken() string{
 
 }
 
-func search(query string,page int,username string,password string) []string {
+func Search(query string,page int,username string,password string) []string {
 	userName = username
 	passWord = password
-  AccessToken = getAccessToken()
+  AccessToken = GetAccessToken()
   resp := get(defaultBaseURL + searchHostURL + "?query=" + query + "&page=" + strconv.Itoa(page))
 	matches := Matches{}
 	json.Unmarshal(resp, &matches)
