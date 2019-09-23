@@ -2,11 +2,11 @@ package zoomeye
 
 import (
 	"fmt"
-  "bytes"
+	"bytes"
 	"strconv"
 	"io/ioutil"
 	"net/http"
-  "encoding/json"
+	"encoding/json"
 )
 
 const (
@@ -81,7 +81,7 @@ func GetAccessToken() string{
 
   auth := Auth{}
 
-  err :=  json.Unmarshal(post(defaultBaseURL + getAccessTokenURL,data),&auth)
+  err :=  json.Unmarshal(Post(defaultBaseURL + getAccessTokenURL,data),&auth)
   if err!=nil{
       fmt.Println(err)
   }
@@ -92,8 +92,8 @@ func GetAccessToken() string{
 func Search(query string,page int,username string,password string) []string {
 	userName = username
 	passWord = password
-  AccessToken = GetAccessToken()
-  resp := get(defaultBaseURL + searchHostURL + "?query=" + query + "&page=" + strconv.Itoa(page))
+	AccessToken = GetAccessToken()
+	resp := Get(defaultBaseURL + searchHostURL + "?query=" + query + "&page=" + strconv.Itoa(page))
 	matches := Matches{}
 	json.Unmarshal(resp, &matches)
 	fmt.Println("Total:",matches.Total)
